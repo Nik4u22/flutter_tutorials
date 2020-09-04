@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Contact {
 
   int _id;

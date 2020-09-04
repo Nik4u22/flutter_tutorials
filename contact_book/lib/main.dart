@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:contactbook/view/contact_View.dart';
+import 'package:contactbook/view/contact_Home.dart';
 
-void main() => runApp(new MyApp());
-
-final routes = {
-  '/home': (BuildContext context) => new Contact_View(),
-  '/': (BuildContext context) => new Contact_View(),
-};
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Contact Book',
-      theme: new ThemeData(primarySwatch: Colors.teal),
-      routes: routes,
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: new Contact_Home(),
     );
   }
+
 }
+
+

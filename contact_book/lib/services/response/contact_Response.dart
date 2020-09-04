@@ -6,9 +6,19 @@ abstract class Create_ContactCallBack {
   void onCreateContactError(String error);
 }
 
+abstract class Update_ContactCallBack {
+  void onUpdateContactSuccess(int contact);
+  void onUpdateContactError(String error);
+}
+
 abstract class Get_ContactCallBack {
   void onGetContactSuccess(List<Contact> contact);
   void onGetContactError(String error);
+}
+
+abstract class Search_ContactCallBack {
+  void onSearchContactSuccess(List<Contact> contact);
+  void onSearchContactError(String error);
 }
 
 abstract class Delete_ContactCallBack {
@@ -32,6 +42,21 @@ class Create_ContactResponse {
   }
 }
 
+class Update_ContactResponse {
+  Update_ContactCallBack _callBackCreate;
+  Contact_Request contact_Request = new Contact_Request();
+  Update_ContactResponse(this._callBackCreate);
+
+  doUpdate(int id, String name, String contactNo) {
+    print("name ="+name+" contact No="+contactNo);
+    var fido = Contact(name, contactNo);
+    contact_Request
+        .update_Contact(id, fido)
+        .then((contact) => _callBackCreate.onUpdateContactSuccess(contact))
+        .catchError((onError) => _callBackCreate.onUpdateContactError(onError.toString()));
+  }
+}
+
 class Get_ContactResponse {
   Get_ContactCallBack _callBackGet;
   Contact_Request contact_Request = new Contact_Request();
@@ -42,6 +67,20 @@ class Get_ContactResponse {
         .get_Contact()
         .then((contact) => _callBackGet.onGetContactSuccess(contact))
         .catchError((onError) => _callBackGet.onGetContactError(onError.toString()));
+  }
+}
+
+class Search_ContactResponse {
+  Search_ContactCallBack _callBackSearch;
+  Contact_Request contact_Request = new Contact_Request();
+  Search_ContactResponse(this._callBackSearch);
+
+  doSearch(String searchText) {
+    var fido = Contact(searchText, searchText);
+    contact_Request
+        .search_Contact(fido)
+        .then((contact) => _callBackSearch.onSearchContactSuccess(contact))
+        .catchError((onError) => _callBackSearch.onSearchContactError(onError.toString()));
   }
 }
 

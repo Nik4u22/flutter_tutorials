@@ -13,7 +13,6 @@ class DatabaseHelper {
 
   Future<Database> get database async {
     if (_database != null) {
-      print(_database);
       return _database;
     }
     _database = await initDb();
@@ -35,7 +34,6 @@ class DatabaseHelper {
     }
 
     var ourDatabase = await openDatabase(path, version: 1, onCreate: createTable);
-    print(ourDatabase);
     return ourDatabase;
   }
 

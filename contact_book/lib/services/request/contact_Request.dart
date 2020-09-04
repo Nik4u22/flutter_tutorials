@@ -12,8 +12,19 @@ class Contact_Request {
     return result;
   }
 
+  Future<int> update_Contact(int id, Contact contact) {
+    print("1");
+    var result = con.updateContact(id, contact);
+    return result;
+  }
+
   Future<List<Contact>> get_Contact() {
     var result = con.getAllContact();
+    return result;
+  }
+
+  Future<List<Contact>> search_Contact(Contact contact) {
+    var result = con.searchContact(contact.name, contact.contactNo);
     return result;
   }
 
