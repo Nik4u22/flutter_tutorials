@@ -1,0 +1,38 @@
+Note that local_auth plugin requires the use of a FragmentActivity as opposed to Activity. This can be easily done by switching to use FlutterFragmentActivity as opposed to FlutterActivity in your manifest (or your own Activity class if you are extending the base class).
+
+1. Open android>app>src>main>AndroidManifest.xml
+Add USE_FINGERPRINT permission.
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.[your.package]">
+  <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+  <application...
+    ...
+    ...
+    ...
+<manifest>
+EDIT 11/8/2020: Use USE_BIOMETRIC instead because USE_FINGERPRINT deprecated already.
+
+2. Change MainActivity.kt to use FlutterFragmentActivity
+If you receive this error: Exception has occurred. PlatformException (PlatformException(no_fragment_activity, local_auth plugin requires activity to be a FragmentActivity., null))
+
+Then you need to do this step. Change FlutterActivity to FlutterFragmentActivity in MainActivity.kt.
+
+package com.[your.package]
+
+import androidx.annotation.NonNull;
+import io.flutter.embedding.android.FlutterFragmentActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugins.GeneratedPluginRegistrant
+
+class MainActivity: FlutterFragmentActivity() {
+    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+    }
+}
+
+3. Theme.AppCompat issue
+If you receive this error: Exception has occurred. PlatformException (PlatformException(error, You need to use a Theme.AppCompat theme (or descendant) with this activity., null)) Then you need to do this:
+
+Go to android>app>src>main>res>values>style.xml
+Change the <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar"> to <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
